@@ -19,11 +19,11 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import kz.shprot.customsliders.ui.theme.CustomSlidersTheme
-import kz.shprot.sliders.common.SliderDefaults
+import kz.shprot.sliders.common.CustomSliderDefaults
 import kz.shprot.sliders.views.DefaultSlider
 
 class MainActivity : ComponentActivity() {
@@ -74,7 +74,16 @@ fun ExampleContent() {
                 minValue = 40f,
                 maxValue = 80f,
                 horizontalPaddingDp = horizontalPadding,
-                colors = SliderDefaults.sliderColors(),
+                brush = Brush.horizontalGradient(
+                    listOf(
+                        Color(0xFF86E5F5),
+                        Color(0xFFFFC000),
+                        Color(0xFFFF9E58),
+                        Color(0xFFFF634E),
+                    )
+                ),
+                colors = CustomSliderDefaults.sliderColors(),
+                sizes = CustomSliderDefaults.sliderSizes(),
                 withIndicator = true,
                 isSliderEnabled = true,
                 onValueChange = { newValue -> defSliderCurrentValue = newValue },

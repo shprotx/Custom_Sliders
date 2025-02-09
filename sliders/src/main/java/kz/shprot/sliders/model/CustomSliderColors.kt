@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.takeOrElse
 
 @Immutable
-class SliderColors constructor(
+class CustomSliderColors constructor(
     val trackColor: Color,
     val sliderColor: Color,
     val knobColor: Color,
@@ -17,7 +17,7 @@ class SliderColors constructor(
         sliderColor: Color = this.sliderColor,
         knobColor: Color = this.knobColor,
         indicatorColor: Color = this.indicatorColor,
-    ) = SliderColors(
+    ) = CustomSliderColors(
         trackColor.takeOrElse { this.trackColor },
         sliderColor.takeOrElse { this.sliderColor },
         knobColor.takeOrElse { this.knobColor },

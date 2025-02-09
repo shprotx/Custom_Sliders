@@ -14,14 +14,17 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kz.shprot.sliders.common.CustomSliderDefaults
 import kz.shprot.sliders.common.drawIndicatorTriangle
-import kz.shprot.sliders.model.SliderColors
+import kz.shprot.sliders.model.CustomSliderColors
+import kz.shprot.sliders.model.CustomSliderSizes
 import kz.shprot.sliders.util.normalizeSliderValue
 import kz.shprot.sliders.util.toPx
 import kz.shprot.sliders.util.toTechValue
@@ -32,10 +35,12 @@ fun DefaultSlider(
     currentValue: Float,
     minValue: Float,
     maxValue: Float,
-    horizontalPaddingDp: Dp,
-    colors: SliderColors,
-    withIndicator: Boolean,
-    isSliderEnabled: Boolean,
+    horizontalPaddingDp: Dp = 15.dp,
+    brush: Brush? = null,
+    colors: CustomSliderColors = CustomSliderDefaults.sliderColors(),
+    sizes: CustomSliderSizes = CustomSliderDefaults.sliderSizes(),
+    withIndicator: Boolean = false,
+    isSliderEnabled: Boolean = true,
     onValueChange: (Float) -> Unit,
     onDragEnd: () -> Unit,
 ) {
@@ -55,10 +60,11 @@ fun DefaultSlider(
                 modifier = Modifier
                     .padding(bottom = 3.dp)
                     .fillMaxWidth()
-                    .height(5.dp),
+                    .height(sizes.indicatorSize),
                 onDraw = {
                     if (isSliderEnabled) {
                         drawIndicatorTriangle(
+                            indicatorSize = sizes.indicatorSize.toPx(),
                             currentPosition = sliderPosition.x + horizontalPaddingPx,
                             color = colors.indicatorColor,
                         )
@@ -71,8 +77,8 @@ fun DefaultSlider(
             modifier = Modifier
                 .padding(horizontal = horizontalPaddingDp)
                 .fillMaxWidth()
-                .height(50.dp) // todo unification
-                .clip(RoundedCornerShape(10.dp)) // todo unification
+                .height(sizes.sliderHeight)
+                .clip(RoundedCornerShape(sizes.sliderCornerRadius))
                 .clipToBounds()
                 .pointerInput(sliderWidth) {
                     detectHorizontalDragGestures(
@@ -102,11 +108,11 @@ fun DefaultSlider(
                     color = colors.trackColor,
                     size = Size(
                         width = sliderWidth,
-                        height = 50.dp.toPx(), // todo customization
+                        height = sizes.sliderHeight.toPx(),
                     ),
                     cornerRadius = CornerRadius(
-                        x = 10.dp.toPx(), // todo customization
-                        y = 10.dp.toPx(), // todo customization
+                        x = sizes.sliderCornerRadius.toPx(),
+                        y = sizes.sliderCornerRadius.toPx(),
                     ),
                     topLeft = Offset(
                         x = 0f,
@@ -116,14 +122,14 @@ fun DefaultSlider(
 
                 /* Градиентный ползунок */
                 drawRoundRect(
-                    brush = SolidColor(colors.sliderColor), // todo customization
+                    brush = brush ?: SolidColor(colors.sliderColor),
                     size = Size(
                         width = techCurrentValue,
-                        height = 50.dp.toPx(), // todo customization
+                        height = sizes.sliderHeight.toPx(),
                     ),
                     cornerRadius = CornerRadius(
-                        x = 10.dp.toPx(), // todo customization
-                        y = 10.dp.toPx(), // todo customization
+                        x = sizes.sliderCornerRadius.toPx(),
+                        y = sizes.sliderCornerRadius.toPx(),
                     ),
                     topLeft = Offset(
                         x = 0f,
@@ -132,20 +138,23 @@ fun DefaultSlider(
                 )
 
                 /* Knob */
-                val xKnob = sliderPosition.x - 13.dp.toPx()
+                val xKnob = sliderPosition.x - 5.dp.toPx() - sizes.knobHorizontalPadding.toPx()
                 drawRoundRect(
                     color = colors.knobColor,
                     size = Size(
                         width = 5.dp.toPx(),
-                        height = 26.dp.toPx()
+                        height = (sizes.sliderHeight - sizes.knobVerticalPadding * 2).toPx(),
                     ),
                     cornerRadius = CornerRadius(
                         x = 2.dp.toPx(),
                         y = 2.dp.toPx(),
                     ),
                     topLeft = Offset(
-                        x = if (xKnob < 8.dp.toPx()) 8.dp.toPx() else xKnob,
-                        y = 12.dp.toPx(), // todo customization
+                        x = if (xKnob < sizes.knobHorizontalPadding.toPx())
+                            sizes.knobHorizontalPadding.toPx()
+                        else
+                            xKnob,
+                        y = sizes.knobVerticalPadding.toPx(),
                     )
                 )
             },
