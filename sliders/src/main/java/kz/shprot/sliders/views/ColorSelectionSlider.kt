@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,12 +30,13 @@ import androidx.compose.ui.unit.dp
 import kz.shprot.sliders.common.CustomSliderDefaults
 import kz.shprot.sliders.model.CustomSliderColors
 import kz.shprot.sliders.model.CustomSliderProperties
+import kz.shprot.sliders.util.getColorBySliderPosition
 import kz.shprot.sliders.util.toPx
 
 @Composable
 fun ColorSelectionSlider(
     modifier: Modifier = Modifier,
-    gradientBrush: Brush,
+    gradientList: List<Color>,
     horizontalPaddingDp: Dp = 15.dp,
     colors: CustomSliderColors = CustomSliderDefaults.sliderColors(),
     properties: CustomSliderProperties = CustomSliderDefaults.sliderProperties(),
@@ -45,6 +47,12 @@ fun ColorSelectionSlider(
     val sliderWidthDp = LocalConfiguration.current.screenWidthDp.dp - horizontalPaddingDp * 2
     val sliderWidth = sliderWidthDp.toPx()
     var colorPosition by remember { mutableStateOf(Offset(x = sliderWidth / 2, y = 0f)) }
+    val gradientBrush = remember { Brush.horizontalGradient(gradientList) }
+
+    LaunchedEffect(Unit) {
+        val color = getColorBySliderPosition(gradientList, 0.5f)
+        onSliderPositionChanged(color)
+    }
 
     Box(
         modifier = modifier
@@ -68,6 +76,9 @@ fun ColorSelectionSlider(
                                     .coerceAtMost(sliderWidth)
                             )
                             colorPosition = newPosition
+                            val normalizedPosition = newPosition.x / sliderWidth
+                            val color = getColorBySliderPosition(gradientList, normalizedPosition)
+                            onSliderPositionChanged(color)
                         },
                         onDragEnd = onDragEnd,
                     )

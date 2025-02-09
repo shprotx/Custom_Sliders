@@ -217,17 +217,15 @@ internal fun ColorSelectionSliderSection(
     horizontalPadding: Dp,
 ) {
 
-    val rgbGradientBrush = remember {
-        Brush.horizontalGradient(
-            listOf(
-                Color(0xFFFF0000),
-                Color(0xFFFF8A00),
-                Color(0xFFFFE500),
-                Color(0xFF05FF00),
-                Color(0xFF00FFF0),
-                Color(0xFF0500FF),
-                Color(0xFFFF00D6),
-            )
+    val rgbGradient = remember {
+        listOf(
+            Color(0xFFFF0000),
+            Color(0xFFFF8A00),
+            Color(0xFFFFE500),
+            Color(0xFF05FF00),
+            Color(0xFF00FFF0),
+            Color(0xFF0500FF),
+            Color(0xFFFF00D6),
         )
     }
     var currentColor: Color? by remember { mutableStateOf(null) }
@@ -247,7 +245,7 @@ internal fun ColorSelectionSliderSection(
 
         ColorSelectionSlider(
             modifier = Modifier,
-            gradientBrush = rgbGradientBrush,
+            gradientList = rgbGradient,
             horizontalPaddingDp = horizontalPadding,
             properties = CustomSliderDefaults.sliderProperties(),
             onSliderPositionChanged = { newColor -> currentColor = newColor},
