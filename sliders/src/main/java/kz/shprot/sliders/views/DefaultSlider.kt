@@ -14,7 +14,6 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
@@ -22,6 +21,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kz.shprot.sliders.common.drawIndicatorTriangle
+import kz.shprot.sliders.model.SliderColors
 import kz.shprot.sliders.util.normalizeSliderValue
 import kz.shprot.sliders.util.toPx
 import kz.shprot.sliders.util.toTechValue
@@ -33,6 +33,7 @@ fun DefaultSlider(
     minValue: Float,
     maxValue: Float,
     horizontalPaddingDp: Dp,
+    colors: SliderColors,
     withIndicator: Boolean,
     isSliderEnabled: Boolean,
     onValueChange: (Float) -> Unit,
@@ -59,7 +60,7 @@ fun DefaultSlider(
                     if (isSliderEnabled) {
                         drawIndicatorTriangle(
                             currentPosition = sliderPosition.x + horizontalPaddingPx,
-                            color = Color.Red, // todo customization
+                            color = colors.indicatorColor,
                         )
                     }
                 },
@@ -98,7 +99,7 @@ fun DefaultSlider(
 
                 /* Фон под слайдером */
                 drawRoundRect(
-                    color = Color.Gray, // todo customization
+                    color = colors.trackColor,
                     size = Size(
                         width = sliderWidth,
                         height = 50.dp.toPx(), // todo customization
@@ -115,7 +116,7 @@ fun DefaultSlider(
 
                 /* Градиентный ползунок */
                 drawRoundRect(
-                    brush = SolidColor(Color.Cyan), // todo customization
+                    brush = SolidColor(colors.sliderColor), // todo customization
                     size = Size(
                         width = techCurrentValue,
                         height = 50.dp.toPx(), // todo customization
@@ -127,6 +128,24 @@ fun DefaultSlider(
                     topLeft = Offset(
                         x = 0f,
                         y = 0f,
+                    )
+                )
+
+                /* Knob */
+                val xKnob = sliderPosition.x - 13.dp.toPx()
+                drawRoundRect(
+                    color = colors.knobColor,
+                    size = Size(
+                        width = 5.dp.toPx(),
+                        height = 26.dp.toPx()
+                    ),
+                    cornerRadius = CornerRadius(
+                        x = 2.dp.toPx(),
+                        y = 2.dp.toPx(),
+                    ),
+                    topLeft = Offset(
+                        x = if (xKnob < 8.dp.toPx()) 8.dp.toPx() else xKnob,
+                        y = 12.dp.toPx(), // todo customization
                     )
                 )
             },

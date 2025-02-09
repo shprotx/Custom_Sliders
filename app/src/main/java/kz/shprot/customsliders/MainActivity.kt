@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,9 +19,11 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kz.shprot.customsliders.ui.theme.CustomSlidersTheme
+import kz.shprot.sliders.common.SliderDefaults
 import kz.shprot.sliders.views.DefaultSlider
 
 class MainActivity : ComponentActivity() {
@@ -43,7 +47,8 @@ fun ExampleContent() {
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
 
@@ -59,7 +64,8 @@ fun ExampleContent() {
                 modifier = Modifier
                     .padding(horizontal = horizontalPadding),
                 text = "$defSliderCurrentValue",
-                fontSize = 20.sp,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground,
             )
 
             DefaultSlider(
@@ -68,6 +74,7 @@ fun ExampleContent() {
                 minValue = 40f,
                 maxValue = 80f,
                 horizontalPaddingDp = horizontalPadding,
+                colors = SliderDefaults.sliderColors(),
                 withIndicator = true,
                 isSliderEnabled = true,
                 onValueChange = { newValue -> defSliderCurrentValue = newValue },
@@ -100,12 +107,14 @@ internal fun DrawSliderValues(
 
         Text(
             text = "$min",
-            fontSize = 12.sp,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onBackground,
         )
 
         Text(
             text = "$max",
-            fontSize = 12.sp,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onBackground,
         )
     }
 }
