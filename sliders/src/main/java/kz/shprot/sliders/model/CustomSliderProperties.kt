@@ -4,10 +4,11 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 
 @Immutable
-class CustomSliderSizes(
+class CustomSliderProperties(
     val sliderHeight: Dp,
     val sliderCornerRadius: Dp,
     val knobHorizontalPadding: Dp,
     val knobVerticalPadding: Dp,
     val indicatorSize: Dp,
+    val stepBetweenStripes: Dp,
 )

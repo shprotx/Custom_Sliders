@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import kz.shprot.sliders.common.CustomSliderDefaults
 import kz.shprot.sliders.common.drawIndicatorTriangle
 import kz.shprot.sliders.model.CustomSliderColors
-import kz.shprot.sliders.model.CustomSliderSizes
+import kz.shprot.sliders.model.CustomSliderProperties
 import kz.shprot.sliders.util.normalizeSliderValue
 import kz.shprot.sliders.util.toDp
 import kz.shprot.sliders.util.toPx
@@ -44,7 +44,7 @@ fun DefaultSlider(
     brush: Brush? = null,
     scaleItems: List<String>? = null,
     colors: CustomSliderColors = CustomSliderDefaults.sliderColors(),
-    sizes: CustomSliderSizes = CustomSliderDefaults.sliderSizes(),
+    sizes: CustomSliderProperties = CustomSliderDefaults.sliderProperties(),
     withIndicator: Boolean = false,
     isSliderEnabled: Boolean = true,
     onValueChange: (Float) -> Unit,
