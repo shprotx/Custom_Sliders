@@ -44,7 +44,7 @@ fun DefaultSlider(
     brush: Brush? = null,
     scaleItems: List<String>? = null,
     colors: CustomSliderColors = CustomSliderDefaults.sliderColors(),
-    sizes: CustomSliderProperties = CustomSliderDefaults.sliderProperties(),
+    properties: CustomSliderProperties = CustomSliderDefaults.sliderProperties(),
     withIndicator: Boolean = false,
     isSliderEnabled: Boolean = true,
     onValueChange: (Float) -> Unit,
@@ -67,11 +67,11 @@ fun DefaultSlider(
                 modifier = Modifier
                     .padding(bottom = 3.dp)
                     .fillMaxWidth()
-                    .height(sizes.indicatorSize),
+                    .height(properties.indicatorSize),
                 onDraw = {
                     if (isSliderEnabled) {
                         drawIndicatorTriangle(
-                            indicatorSize = sizes.indicatorSize.toPx(),
+                            indicatorSize = properties.indicatorSize.toPx(),
                             currentPosition = sliderPosition.x + horizontalPaddingPx,
                             color = colors.indicatorColor,
                         )
@@ -84,8 +84,8 @@ fun DefaultSlider(
             modifier = Modifier
                 .padding(horizontal = horizontalPaddingDp)
                 .fillMaxWidth()
-                .height(sizes.sliderHeight)
-                .clip(RoundedCornerShape(sizes.sliderCornerRadius))
+                .height(properties.sliderHeight)
+                .clip(RoundedCornerShape(properties.sliderCornerRadius))
                 .clipToBounds()
                 .background(colors.trackColor)
         ) {
@@ -102,8 +102,8 @@ fun DefaultSlider(
             Canvas(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(sizes.sliderHeight)
-                    .clip(RoundedCornerShape(sizes.sliderCornerRadius))
+                    .height(properties.sliderHeight)
+                    .clip(RoundedCornerShape(properties.sliderCornerRadius))
                     .clipToBounds()
                     .pointerInput(sliderWidth) {
                         detectHorizontalDragGestures(
@@ -133,11 +133,11 @@ fun DefaultSlider(
                         brush = brush ?: SolidColor(colors.sliderColor),
                         size = Size(
                             width = techCurrentValue,
-                            height = sizes.sliderHeight.toPx(),
+                            height = properties.sliderHeight.toPx(),
                         ),
                         cornerRadius = CornerRadius(
-                            x = sizes.sliderCornerRadius.toPx(),
-                            y = sizes.sliderCornerRadius.toPx(),
+                            x = properties.sliderCornerRadius.toPx(),
+                            y = properties.sliderCornerRadius.toPx(),
                         ),
                         topLeft = Offset(
                             x = 0f,
@@ -146,23 +146,23 @@ fun DefaultSlider(
                     )
 
                     /* Knob */
-                    val xKnob = sliderPosition.x - 5.dp.toPx() - sizes.knobHorizontalPadding.toPx()
+                    val xKnob = sliderPosition.x - 5.dp.toPx() - properties.knobHorizontalPadding.toPx()
                     drawRoundRect(
                         color = colors.knobColor,
                         size = Size(
                             width = 5.dp.toPx(),
-                            height = (sizes.sliderHeight - sizes.knobVerticalPadding * 2).toPx(),
+                            height = (properties.sliderHeight - properties.knobVerticalPadding * 2).toPx(),
                         ),
                         cornerRadius = CornerRadius(
                             x = 2.dp.toPx(),
                             y = 2.dp.toPx(),
                         ),
                         topLeft = Offset(
-                            x = if (xKnob < sizes.knobHorizontalPadding.toPx())
-                                sizes.knobHorizontalPadding.toPx()
+                            x = if (xKnob < properties.knobHorizontalPadding.toPx())
+                                properties.knobHorizontalPadding.toPx()
                             else
                                 xKnob,
-                            y = sizes.knobVerticalPadding.toPx(),
+                            y = properties.knobVerticalPadding.toPx(),
                         )
                     )
                 },

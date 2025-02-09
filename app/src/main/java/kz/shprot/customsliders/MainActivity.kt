@@ -6,12 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -31,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import kz.shprot.customsliders.ui.theme.CustomSlidersTheme
 import kz.shprot.customsliders.util.roundIfWhole
 import kz.shprot.sliders.common.CustomSliderDefaults
+import kz.shprot.sliders.views.ColorSelectionSlider
 import kz.shprot.sliders.views.DefaultSlider
 import kz.shprot.sliders.views.TwoValuesSlider
 
@@ -50,7 +56,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ExampleContent() {
-
     val horizontalPadding = 15.dp
 
     Column(
@@ -63,6 +68,8 @@ fun ExampleContent() {
         DefaultSliderSection(horizontalPadding)
 
         TwoValuesSliderSection(horizontalPadding)
+
+        ColorSelectionSliderSection(horizontalPadding)
     }
 }
 
@@ -124,7 +131,7 @@ internal fun DefaultSliderSection(
             horizontalPaddingDp = horizontalPadding,
             scaleItems = scaleItems,
             colors = CustomSliderDefaults.sliderColors(),
-            sizes = CustomSliderDefaults.sliderProperties(),
+            properties = CustomSliderDefaults.sliderProperties(),
             withIndicator = true,
             isSliderEnabled = true,
             onValueChange = { newValue -> defSliderCurrentValue = newValue },
@@ -200,6 +207,51 @@ internal fun TwoValuesSliderSection(
                 .padding(horizontal = horizontalPadding),
             min = 0f,
             max = 100f,
+        )
+    }
+}
+
+
+@Composable
+internal fun ColorSelectionSliderSection(
+    horizontalPadding: Dp,
+) {
+
+    val rgbGradientBrush = remember {
+        Brush.horizontalGradient(
+            listOf(
+                Color(0xFFFF0000),
+                Color(0xFFFF8A00),
+                Color(0xFFFFE500),
+                Color(0xFF05FF00),
+                Color(0xFF00FFF0),
+                Color(0xFF0500FF),
+                Color(0xFFFF00D6),
+            )
+        )
+    }
+    var currentColor: Color? by remember { mutableStateOf(null) }
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+
+        Box(
+            modifier = Modifier
+                .padding(horizontal = horizontalPadding)
+                .width(100.dp)
+                .height(30.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(currentColor ?: Color(0xFF484848)),
+        )
+
+        ColorSelectionSlider(
+            modifier = Modifier,
+            gradientBrush = rgbGradientBrush,
+            horizontalPaddingDp = horizontalPadding,
+            properties = CustomSliderDefaults.sliderProperties(),
+            onSliderPositionChanged = { newColor -> currentColor = newColor},
+            onDragEnd = { println("onDragEnd") },
         )
     }
 }

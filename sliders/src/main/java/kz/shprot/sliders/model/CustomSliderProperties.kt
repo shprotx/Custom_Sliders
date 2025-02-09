@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.Dp
 class CustomSliderProperties(
     val sliderHeight: Dp,
     val sliderCornerRadius: Dp,
+    val knobWidth: Dp, // todo integrate to other sliders
     val knobHorizontalPadding: Dp,
     val knobVerticalPadding: Dp,
     val indicatorSize: Dp,

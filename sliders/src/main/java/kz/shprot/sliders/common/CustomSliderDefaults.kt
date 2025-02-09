@@ -30,6 +30,7 @@ object CustomSliderDefaults {
     fun sliderProperties(
         sliderCornerRadius: Dp = 10.dp,
         knobHorizontalPadding: Dp = 10.dp,
+        knobWidth: Dp = 5.dp,
         knobVerticalPadding: Dp = 10.dp,
         sliderHeight: Dp = 50.dp,
         indicatorSize: Dp = 5.dp,
@@ -37,6 +38,7 @@ object CustomSliderDefaults {
     ): CustomSliderProperties = CustomSliderProperties(
         sliderCornerRadius = sliderCornerRadius,
         knobHorizontalPadding = knobHorizontalPadding,
+        knobWidth = knobWidth,
         knobVerticalPadding = knobVerticalPadding,
         sliderHeight = sliderHeight,
         indicatorSize = indicatorSize,
