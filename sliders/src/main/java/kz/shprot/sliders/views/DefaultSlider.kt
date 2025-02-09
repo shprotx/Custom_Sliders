@@ -146,11 +146,13 @@ fun DefaultSlider(
                     )
 
                     /* Knob */
-                    val xKnob = sliderPosition.x - 5.dp.toPx() - properties.knobHorizontalPadding.toPx()
+                    val xKnob = sliderPosition.x -
+                            properties.knobWidth.toPx() -
+                            properties.knobHorizontalPadding.toPx()
                     drawRoundRect(
                         color = colors.knobColor,
                         size = Size(
-                            width = 5.dp.toPx(),
+                            width = properties.knobWidth.toPx(),
                             height = (properties.sliderHeight - properties.knobVerticalPadding * 2).toPx(),
                         ),
                         cornerRadius = CornerRadius(
@@ -194,7 +196,7 @@ fun DefaultSlider(
                             )
                         },
                     scale = scaleItems,
-                    containerSize = LocalConfiguration.current.screenWidthDp.dp - horizontalPaddingDp * 2,
+                    containerSize = sliderWidthDp,
                     color = colors.knobColor,
                 )
             }

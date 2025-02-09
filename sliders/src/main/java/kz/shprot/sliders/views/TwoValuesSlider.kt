@@ -58,7 +58,11 @@ fun TwoValuesSlider(
         true -> colors.moreThanBaseColor
         false -> colors.lessThanBaseColor
     }
-    val knobColor = when (techCurrentValue > techBaseValue + 5.dp.toPx() + properties.knobHorizontalPadding.toPx()) {
+    val knobColor = when (
+        techCurrentValue > techBaseValue +
+                properties.knobWidth.toPx() +
+                properties.knobHorizontalPadding.toPx()
+    ) {
         true -> colors.moreThanBaseColor
         false -> colors.knobColor
     }
@@ -180,11 +184,13 @@ fun TwoValuesSlider(
                 }
 
                 /* Knob */
-                val xKnob = sliderPosition.x - 5.dp.toPx() - properties.knobHorizontalPadding.toPx()
+                val xKnob = sliderPosition.x -
+                        properties.knobWidth.toPx() -
+                        properties.knobHorizontalPadding.toPx()
                 drawRoundRect(
                     color = knobColor,
                     size = Size(
-                        width = 5.dp.toPx(),
+                        width = properties.knobWidth.toPx(),
                         height = (properties.sliderHeight - properties.knobVerticalPadding * 2).toPx(),
                     ),
                     cornerRadius = CornerRadius(
