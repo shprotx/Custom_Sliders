@@ -28,6 +28,7 @@ import kz.shprot.sliders.common.CustomSliderDefaults
 import kz.shprot.sliders.common.drawIndicatorTriangle
 import kz.shprot.sliders.model.CustomSliderColors
 import kz.shprot.sliders.model.CustomSliderProperties
+import kz.shprot.sliders.theme.Dimensions
 import kz.shprot.sliders.util.normalizeSliderValue
 import kz.shprot.sliders.util.toDp
 import kz.shprot.sliders.util.toPx
@@ -40,7 +41,7 @@ fun DefaultSlider(
     currentValue: Float,
     minValue: Float,
     maxValue: Float,
-    horizontalPaddingDp: Dp = 15.dp,
+    horizontalPaddingDp: Dp = Dimensions.paddingBig,
     brush: Brush? = null,
     scaleItems: List<String>? = null,
     colors: CustomSliderColors = CustomSliderDefaults.sliderColors(),
@@ -65,7 +66,7 @@ fun DefaultSlider(
         if (withIndicator) {
             Canvas(
                 modifier = Modifier
-                    .padding(bottom = 3.dp)
+                    .padding(bottom = Dimensions.paddingSmall)
                     .fillMaxWidth()
                     .height(properties.indicatorSize),
                 onDraw = {
@@ -156,8 +157,8 @@ fun DefaultSlider(
                             height = (properties.sliderHeight - properties.knobVerticalPadding * 2).toPx(),
                         ),
                         cornerRadius = CornerRadius(
-                            x = 2.dp.toPx(),
-                            y = 2.dp.toPx(),
+                            x = Dimensions.cornersSmall.toPx(),
+                            y = Dimensions.cornersSmall.toPx(),
                         ),
                         topLeft = Offset(
                             x = if (xKnob < properties.knobHorizontalPadding.toPx())

@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipPath
-import androidx.compose.ui.unit.dp
+import kz.shprot.sliders.theme.Dimensions
 
 internal fun DrawScope.drawIndicatorTriangle(
     indicatorSize: Float,
@@ -71,14 +71,14 @@ internal fun DrawScope.drawStripes(
                         x = x - elementHeight / 2,
                         y = yOffset + elementHeight
                     ),
-                    strokeWidth = 1.dp.toPx()
+                    strokeWidth = Dimensions.strokeWidthSmall.toPx()
                 )
                 x += step
             }
         }
 
         drawRoundRect(
-            style = Stroke(2.dp.toPx()),
+            style = Stroke(Dimensions.strokeWidthMedium.toPx()),
             color = color,
             cornerRadius = CornerRadius(cornerRadius),
             size = Size(

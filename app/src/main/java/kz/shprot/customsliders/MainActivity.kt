@@ -31,9 +31,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kz.shprot.customsliders.ui.theme.BlueLight
 import kz.shprot.customsliders.ui.theme.CustomSlidersTheme
+import kz.shprot.customsliders.ui.theme.Dimensions
+import kz.shprot.customsliders.ui.theme.Green
+import kz.shprot.customsliders.ui.theme.Orange
+import kz.shprot.customsliders.ui.theme.PaletteBlueDark
+import kz.shprot.customsliders.ui.theme.PaletteBlueLight
+import kz.shprot.customsliders.ui.theme.PaletteBlueViolet
+import kz.shprot.customsliders.ui.theme.PaletteGreen
+import kz.shprot.customsliders.ui.theme.PaletteOrange
+import kz.shprot.customsliders.ui.theme.PaletteRed
+import kz.shprot.customsliders.ui.theme.PaletteYellow
+import kz.shprot.customsliders.ui.theme.Red
+import kz.shprot.customsliders.ui.theme.SurfaceBlack
+import kz.shprot.customsliders.ui.theme.Yellow
 import kz.shprot.customsliders.util.roundIfWhole
 import kz.shprot.sliders.common.CustomSliderDefaults
 import kz.shprot.sliders.views.ColorSelectionSlider
@@ -56,7 +72,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ExampleContent() {
-    val horizontalPadding = 15.dp
+    val horizontalPadding = Dimensions.paddingBig
 
     Column(
         modifier = Modifier
@@ -79,15 +95,16 @@ internal fun DefaultSliderSection(
     horizontalPadding: Dp,
 ) {
 
+    val context = LocalContext.current
     var defSliderCurrentValue by remember { mutableFloatStateOf(40f) }
     var withScale by remember { mutableStateOf(false) }
     val scaleItems = remember(withScale) {
-        if (withScale) listOf("10", "20", "30", "40", "50", "60", "70", "80", "90")
+        if (withScale) context.resources.getStringArray(R.array.scale_items).toList()
         else null
     }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(Dimensions.paddingMedium)
     ) {
 
         Row(
@@ -107,7 +124,7 @@ internal fun DefaultSliderSection(
             Text(
                 modifier = Modifier
                     .padding(horizontal = horizontalPadding),
-                text = "With scale",
+                text = stringResource(R.string.with_scale),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onBackground,
             )
@@ -115,8 +132,8 @@ internal fun DefaultSliderSection(
             Checkbox(
                 checked = withScale,
                 colors = CheckboxDefaults.colors(
-                    checkedColor = Color(0xFF18B79E),
-                    uncheckedColor = Color(0xFF18B79E),
+                    checkedColor = Green,
+                    uncheckedColor = Green,
                     checkmarkColor = MaterialTheme.colorScheme.onBackground,
                 ),
                 onCheckedChange = { withScale = !withScale },
@@ -141,8 +158,8 @@ internal fun DefaultSliderSection(
         DrawSliderValues(
             modifier = Modifier
                 .padding(horizontal = horizontalPadding),
-            min = 0f,
-            max = 100f,
+            min = EXAMPLE_MIN_VALUE,
+            max = EXAMPLE_MAX_VALUE,
         )
     }
 }
@@ -157,7 +174,7 @@ internal fun TwoValuesSliderSection(
     val baseValue = 80f
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(Dimensions.paddingMedium)
     ) {
 
         Row(
@@ -173,7 +190,7 @@ internal fun TwoValuesSliderSection(
             )
 
             Text(
-                text = ">>  ${currentValue.roundIfWhole()}",
+                text = stringResource(R.string.current_indicator_value, currentValue.roundIfWhole()),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground,
             )
@@ -183,17 +200,12 @@ internal fun TwoValuesSliderSection(
             modifier = Modifier,
             currentValue = currentValue,
             baseValue = baseValue,
-            minValue = 0f,
-            maxValue = 100f,
+            minValue = EXAMPLE_MIN_VALUE,
+            maxValue = EXAMPLE_MAX_VALUE,
             horizontalPaddingDp = horizontalPadding,
-                brush = Brush.horizontalGradient(
-                    listOf(
-                        Color(0xFF86E5F5),
-                        Color(0xFFFFC000),
-                        Color(0xFFFF9E58),
-                        Color(0xFFFF634E),
-                    )
-                ),
+            brush = Brush.horizontalGradient(
+                listOf(BlueLight, Yellow, Orange, Red)
+            ),
             colors = CustomSliderDefaults.sliderColors(),
             properties = CustomSliderDefaults.sliderProperties(),
             withIndicator = true,
@@ -205,8 +217,8 @@ internal fun TwoValuesSliderSection(
         DrawSliderValues(
             modifier = Modifier
                 .padding(horizontal = horizontalPadding),
-            min = 0f,
-            max = 100f,
+            min = EXAMPLE_MIN_VALUE,
+            max = EXAMPLE_MAX_VALUE,
         )
     }
 }
@@ -219,28 +231,28 @@ internal fun ColorSelectionSliderSection(
 
     val rgbGradient = remember {
         listOf(
-            Color(0xFFFF0000),
-            Color(0xFFFF8A00),
-            Color(0xFFFFE500),
-            Color(0xFF05FF00),
-            Color(0xFF00FFF0),
-            Color(0xFF0500FF),
-            Color(0xFFFF00D6),
+            PaletteRed,
+            PaletteOrange,
+            PaletteYellow,
+            PaletteGreen,
+            PaletteBlueLight,
+            PaletteBlueDark,
+            PaletteBlueViolet,
         )
     }
     var currentColor: Color? by remember { mutableStateOf(null) }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(Dimensions.paddingMedium)
     ) {
 
         Box(
             modifier = Modifier
                 .padding(horizontal = horizontalPadding)
-                .width(100.dp)
-                .height(30.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .background(currentColor ?: Color(0xFF484848)),
+                .width(Dimensions.colorIndicatorBoxWidth)
+                .height(Dimensions.colorIndicatorBoxHeight)
+                .clip(RoundedCornerShape(Dimensions.cornerRadiusMedium))
+                .background(currentColor ?: SurfaceBlack),
         )
 
         ColorSelectionSlider(
@@ -281,3 +293,7 @@ internal fun DrawSliderValues(
         )
     }
 }
+
+
+private const val EXAMPLE_MIN_VALUE = 0f
+private const val EXAMPLE_MAX_VALUE = 100f

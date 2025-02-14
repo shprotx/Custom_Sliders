@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import kz.shprot.sliders.common.CustomSliderDefaults
 import kz.shprot.sliders.model.CustomSliderColors
 import kz.shprot.sliders.model.CustomSliderProperties
+import kz.shprot.sliders.theme.Dimensions
 import kz.shprot.sliders.util.getColorBySliderPosition
 import kz.shprot.sliders.util.toPx
 
@@ -37,7 +38,7 @@ import kz.shprot.sliders.util.toPx
 fun ColorSelectionSlider(
     modifier: Modifier = Modifier,
     gradientList: List<Color>,
-    horizontalPaddingDp: Dp = 15.dp,
+    horizontalPaddingDp: Dp = Dimensions.paddingBig,
     colors: CustomSliderColors = CustomSliderDefaults.sliderColors(),
     properties: CustomSliderProperties = CustomSliderDefaults.sliderProperties(),
     onSliderPositionChanged: (Color) -> Unit,

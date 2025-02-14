@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
+import kz.shprot.sliders.theme.Dimensions
 
 @Composable
 internal fun SliderScale(
@@ -55,7 +56,7 @@ internal fun SliderScale(
                     text = it,
                     color = color,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
+                    fontSize = Dimensions.fontSizeRegular,
                     textAlign = TextAlign.Center,
                 )
             }

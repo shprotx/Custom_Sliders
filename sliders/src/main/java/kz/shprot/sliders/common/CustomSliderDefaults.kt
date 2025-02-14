@@ -3,20 +3,24 @@ package kz.shprot.sliders.common
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import kz.shprot.sliders.model.CustomSliderColors
 import kz.shprot.sliders.model.CustomSliderProperties
+import kz.shprot.sliders.theme.Blue
+import kz.shprot.sliders.theme.Dimensions
+import kz.shprot.sliders.theme.Gray
+import kz.shprot.sliders.theme.Green
+import kz.shprot.sliders.theme.Red
 
 object CustomSliderDefaults {
 
     @Composable
     fun sliderColors(
-        trackColor: Color = Color(0xFF484848),
-        sliderColor: Color = Color(0xFF18B79E),
+        trackColor: Color = Gray,
+        sliderColor: Color = Green,
         knobColor: Color = Color.White,
-        indicatorColor: Color = Color(0xFFFE644F),
-        moreThanBaseColor: Color = Color(0xFFFE644F),
-        lessThanBaseColor: Color = Color(0xFF5398FF),
+        indicatorColor: Color = Red,
+        moreThanBaseColor: Color = Red,
+        lessThanBaseColor: Color = Blue,
     ): CustomSliderColors = CustomSliderColors(
         trackColor = trackColor,
         sliderColor = sliderColor,
@@ -28,13 +32,13 @@ object CustomSliderDefaults {
 
     @Composable
     fun sliderProperties(
-        sliderCornerRadius: Dp = 10.dp,
-        knobHorizontalPadding: Dp = 10.dp,
-        knobWidth: Dp = 5.dp,
-        knobVerticalPadding: Dp = 10.dp,
-        sliderHeight: Dp = 50.dp,
-        indicatorSize: Dp = 5.dp,
-        stepBetweenStripes: Dp = 10.dp,
+        sliderCornerRadius: Dp = Dimensions.cornersMedium,
+        knobHorizontalPadding: Dp = Dimensions.paddingMedium,
+        knobWidth: Dp = Dimensions.knobWidth,
+        knobVerticalPadding: Dp = Dimensions.paddingMedium,
+        sliderHeight: Dp = Dimensions.sliderHeight,
+        indicatorSize: Dp = Dimensions.indicatorSize,
+        stepBetweenStripes: Dp = Dimensions.paddingMedium,
     ): CustomSliderProperties = CustomSliderProperties(
         sliderCornerRadius = sliderCornerRadius,
         knobHorizontalPadding = knobHorizontalPadding,
