@@ -3,8 +3,9 @@
 
     <string name="current_indicator_value">➟ %s</string>
     <string name="with_scale">With scale</string>
+    <string name="undefined">Undefined</string>
 
-    <array name="scale_items">
+    <string-array name="scale_items">
         <item>10</item>
         <item>20</item>
         <item>30</item>
@@ -14,5 +15,5 @@
         <item>70</item>
         <item>80</item>
         <item>90</item>
-    </array>
+    </string-array>
 </resources>

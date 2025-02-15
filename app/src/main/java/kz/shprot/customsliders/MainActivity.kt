@@ -21,6 +21,7 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import kz.shprot.customsliders.ui.theme.BlueLight
 import kz.shprot.customsliders.ui.theme.CustomSlidersTheme
 import kz.shprot.customsliders.ui.theme.Dimensions
@@ -51,6 +51,7 @@ import kz.shprot.customsliders.ui.theme.Red
 import kz.shprot.customsliders.ui.theme.SurfaceBlack
 import kz.shprot.customsliders.ui.theme.Yellow
 import kz.shprot.customsliders.util.roundIfWhole
+import kz.shprot.customsliders.util.toHex
 import kz.shprot.sliders.common.CustomSliderDefaults
 import kz.shprot.sliders.views.ColorSelectionSlider
 import kz.shprot.sliders.views.DefaultSlider
@@ -98,10 +99,17 @@ internal fun DefaultSliderSection(
     val context = LocalContext.current
     var defSliderCurrentValue by remember { mutableFloatStateOf(40f) }
     var withScale by remember { mutableStateOf(false) }
-    val scaleItems = remember(withScale) {
-        if (withScale) context.resources.getStringArray(R.array.scale_items).toList()
-        else null
+    val scaleItems by remember {
+        derivedStateOf {
+            if (withScale)
+                context.resources
+                    .getStringArray(R.array.scale_items)
+                    .toList()
+            else
+                null
+        }
     }
+
 
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimensions.paddingMedium)
@@ -151,8 +159,13 @@ internal fun DefaultSliderSection(
             properties = CustomSliderDefaults.sliderProperties(),
             withIndicator = true,
             isSliderEnabled = true,
+            customIndicator = {
+                CustomIndicator(defSliderCurrentValue.roundIfWhole())
+            },
             onValueChange = { newValue -> defSliderCurrentValue = newValue },
-            onDragEnd = { println("onDragEnd") },
+            onDragEnd = {
+                // todo something useful
+            },
         )
 
         DrawSliderValues(
@@ -210,8 +223,11 @@ internal fun TwoValuesSliderSection(
             properties = CustomSliderDefaults.sliderProperties(),
             withIndicator = true,
             isSliderEnabled = true,
+            customIndicator = null,
             onValueChange = { newValue -> currentValue = newValue },
-            onDragEnd = { println("onDragEnd") },
+            onDragEnd = {
+                // todo something useful
+            },
         )
 
         DrawSliderValues(
@@ -229,6 +245,7 @@ internal fun ColorSelectionSliderSection(
     horizontalPadding: Dp,
 ) {
 
+    val context = LocalContext.current
     val rgbGradient = remember {
         listOf(
             PaletteRed,
@@ -246,6 +263,25 @@ internal fun ColorSelectionSliderSection(
         verticalArrangement = Arrangement.spacedBy(Dimensions.paddingMedium)
     ) {
 
+        ColorSelectionSlider(
+            modifier = Modifier,
+            gradientList = rgbGradient,
+            horizontalPaddingDp = horizontalPadding,
+            properties = CustomSliderDefaults.sliderProperties(),
+            customIndicator = {
+                CustomIndicator(
+                    value = currentColor?.toHex()
+                        ?: context.getString(R.string.undefined)
+                )
+            },
+            onSliderPositionChanged = { newColor ->
+                currentColor = newColor
+            },
+            onDragEnd = {
+                // todo something useful
+            },
+        )
+
         Box(
             modifier = Modifier
                 .padding(horizontal = horizontalPadding)
@@ -253,15 +289,6 @@ internal fun ColorSelectionSliderSection(
                 .height(Dimensions.colorIndicatorBoxHeight)
                 .clip(RoundedCornerShape(Dimensions.cornerRadiusMedium))
                 .background(currentColor ?: SurfaceBlack),
-        )
-
-        ColorSelectionSlider(
-            modifier = Modifier,
-            gradientList = rgbGradient,
-            horizontalPaddingDp = horizontalPadding,
-            properties = CustomSliderDefaults.sliderProperties(),
-            onSliderPositionChanged = { newColor -> currentColor = newColor},
-            onDragEnd = { println("onDragEnd") },
         )
     }
 }
@@ -292,6 +319,24 @@ internal fun DrawSliderValues(
             color = MaterialTheme.colorScheme.onBackground,
         )
     }
+}
+
+
+@Composable
+internal fun CustomIndicator(
+    value: String,
+) {
+
+    Text(
+        modifier = Modifier
+            .padding(bottom = Dimensions.paddingExtraSmall)
+            .clip(RoundedCornerShape(Dimensions.cornerRadiusSmall))
+            .background(Color.White)
+            .padding(Dimensions.paddingSmall),
+        text = value,
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.background,
+    )
 }
 
 
