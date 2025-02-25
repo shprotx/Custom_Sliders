@@ -52,6 +52,9 @@ DefaultSlider(
     properties = CustomSliderDefaults.sliderProperties(),  // optional
     withIndicator = true,                                  // optional
     isSliderEnabled = true,                                // optional
+    customIndicator = {                                    // optional
+        Text(defSliderCurrentValue.roundIfWhole())         // any @Composable
+    }
     onValueChange = { newValue -> defSliderCurrentValue = newValue },
     onDragEnd = {
         // todo your api request or something else
@@ -113,6 +116,9 @@ ColorSelectionSlider(
     horizontalPaddingDp = horizontalPadding,
     colors = CustomSliderDefaults.sliderColors(),         // optional
     properties = CustomSliderDefaults.sliderProperties(), // optional
+    customIndicator = {                                   // optional
+        Text(currentColor?.toHex() ?: "Undefined")        // any @Composable
+    }
     onSliderPositionChanged = { newColor -> currentColor = newColor},
     onDragEnd = {
         // todo your api request or something else
