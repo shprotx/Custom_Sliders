@@ -10,6 +10,11 @@ A collection of customizable sliders for Jetpack Compose, including a default sl
 - Works with any range of values
 - API level 26+
 
+# Appearance
+
+![Запись экрана 2025-02-10 в 01 21 04](https://github.com/user-attachments/assets/d2a02517-1bd1-4768-8ded-053964fd7e9e)
+
+
 # Installation
 
 Add Jitpack repository to your project (settings.gradle.kts)
@@ -29,7 +34,7 @@ Add library dependency
 
 ```kotlin
 dependencies {
-    implementation("com.github.shprotx:Custom_Sliders:v1.0-alpha")
+    implementation("com.github.shprotx:Custom_Sliders:v1.0")
 }
 ```
 
