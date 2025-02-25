@@ -14,4 +14,5 @@ object Dimensions {
 
     val colorIndicatorBoxWidth: Dp = 100.dp
     val colorIndicatorBoxHeight: Dp = 30.dp
+    val sectionHeight: Dp = 150.dp
 }
