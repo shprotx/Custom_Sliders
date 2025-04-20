@@ -127,7 +127,7 @@ fun ColorSelectionSlider(
 
                 drawLine(
                     strokeWidth = properties.knobWidth.toPx(),
-                    color = colors.knobColor,
+                    color = if (isSliderEnabled) colors.knobColor else colors.disabledKnobColor,
                     start = Offset(
                         x = colorPosition.x,
                         y = 0f,
@@ -139,7 +139,7 @@ fun ColorSelectionSlider(
                 )
 
                 drawCircle(
-                    color = colors.knobColor,
+                    color = if (isSliderEnabled) colors.knobColor else colors.disabledKnobColor,
                     radius = (properties.sliderHeight / 4).toPx(),
                     center = Offset(
                         x = colorPosition.x,
@@ -153,7 +153,7 @@ fun ColorSelectionSlider(
 
                 drawLine(
                     strokeWidth = properties.knobWidth.toPx(),
-                    color = colors.knobColor,
+                    color = if (isSliderEnabled) colors.knobColor else colors.disabledKnobColor,
                     start = Offset(
                         x = colorPosition.x,
                         y = (properties.sliderHeight - properties.sliderHeight / 4).toPx(),

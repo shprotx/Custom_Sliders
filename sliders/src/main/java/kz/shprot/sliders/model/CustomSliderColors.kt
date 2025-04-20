@@ -16,8 +16,6 @@ class CustomSliderColors constructor(
     val disabledSliderColor: Color,
     val disabledKnobColor: Color,
     val disabledIndicatorColor: Color,
-    val disabledMoreThanBaseColor: Color,
-    val disabledLessThanBaseColor: Color,
 ) {
 
     fun copy(
@@ -31,8 +29,6 @@ class CustomSliderColors constructor(
         disabledSliderColor: Color = this.disabledSliderColor,
         disabledKnobColor: Color = this.disabledKnobColor,
         disabledIndicatorColor: Color = this.disabledIndicatorColor,
-        disabledMoreThanBaseColor: Color = this.disabledMoreThanBaseColor,
-        disabledLessThanBaseColor: Color = this.disabledLessThanBaseColor,
     ) = CustomSliderColors(
         trackColor.takeOrElse { this.trackColor },
         sliderColor.takeOrElse { this.sliderColor },
@@ -44,7 +40,5 @@ class CustomSliderColors constructor(
         disabledSliderColor.takeOrElse { this.disabledSliderColor },
         disabledKnobColor.takeOrElse { this.disabledKnobColor },
         disabledIndicatorColor.takeOrElse { this.disabledIndicatorColor },
-        disabledMoreThanBaseColor.takeOrElse { this.disabledMoreThanBaseColor },
-        disabledLessThanBaseColor.takeOrElse { this.disabledLessThanBaseColor },
     )
 }

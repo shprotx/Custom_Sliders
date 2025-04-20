@@ -22,6 +22,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
@@ -74,8 +75,8 @@ fun TwoValuesSlider(
                 properties.knobWidth.toPx() +
                 properties.knobHorizontalPadding.toPx()
     ) {
-        true -> colors.moreThanBaseColor
-        false -> colors.knobColor
+        true -> if (isSliderEnabled) colors.moreThanBaseColor else colors.disabledKnobColor
+        false -> if (isSliderEnabled) colors.knobColor else colors.disabledKnobColor
     }
 
     Column(
@@ -134,7 +135,7 @@ fun TwoValuesSlider(
                 .height(properties.sliderHeight)
                 .clip(RoundedCornerShape(properties.sliderCornerRadius))
                 .clipToBounds()
-                .background(colors.trackColor)
+                .background(if (isSliderEnabled) colors.trackColor else colors.disabledTrackColor)
                 .pointerInput(sliderWidth, isSliderEnabled) {
                     detectHorizontalDragGestures(
                         onHorizontalDrag = { change: PointerInputChange, _: Float ->
@@ -179,7 +180,8 @@ fun TwoValuesSlider(
                 /* градиентный ползунок */
                 if (sliderPosition.x >= techBaseValue) {
                     drawRoundRect(
-                        brush = brush ?: SolidColor(colors.sliderColor),
+                        brush = if (isSliderEnabled) brush ?: SolidColor(colors.sliderColor)
+                                else SolidColor(Color.Transparent),
                         size = Size(
                             width = techBaseValue,
                             height = properties.sliderHeight.toPx(),
@@ -208,7 +210,8 @@ fun TwoValuesSlider(
 
                 if (sliderPosition.x <= techBaseValue) {
                     drawRoundRect(
-                        brush = brush ?: SolidColor(colors.sliderColor),
+                        brush = if (isSliderEnabled) brush ?: SolidColor(colors.sliderColor)
+                                else SolidColor(Color.Transparent),
                         size = Size(
                             width = sliderPosition.x,
                             height = properties.sliderHeight.toPx(),
