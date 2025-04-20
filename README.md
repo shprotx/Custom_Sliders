@@ -1,3 +1,5 @@
+![Release](https://jitpack.io/v/shprotx/Custom_Sliders.svg)
+
 # Custom Sliders for Jetpack Compose 🎚️ 
 
 A collection of customizable sliders for Jetpack Compose, including a default slider, a two-value slider, and a color selection slider.
@@ -12,7 +14,7 @@ A collection of customizable sliders for Jetpack Compose, including a default sl
 
 # Appearance
 
-![Запись экрана 2025-02-10 в 01 21 04](https://github.com/user-attachments/assets/d2a02517-1bd1-4768-8ded-053964fd7e9e)
+![Запись экрана 2025-02-26 в 01 13 17](https://github.com/user-attachments/assets/4d5cbb55-634c-493f-9f41-3dcc4e962bae)
 
 
 # Installation
@@ -34,7 +36,7 @@ Add library dependency
 
 ```kotlin
 dependencies {
-    implementation("com.github.shprotx:Custom_Sliders:v1.0")
+    implementation("com.github.shprotx:Custom_Sliders:v1.1")
 }
 ```
 
