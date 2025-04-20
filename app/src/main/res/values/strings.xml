@@ -4,6 +4,7 @@
     <string name="current_indicator_value">➟ %s</string>
     <string name="with_scale">With scale</string>
     <string name="undefined">Undefined</string>
+    <string name="enabled">Enabled</string>
 
     <string-array name="scale_items">
         <item>10</item>

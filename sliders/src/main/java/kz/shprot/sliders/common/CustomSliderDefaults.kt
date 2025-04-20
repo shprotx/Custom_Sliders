@@ -21,6 +21,12 @@ object CustomSliderDefaults {
         indicatorColor: Color = Red,
         moreThanBaseColor: Color = Red,
         lessThanBaseColor: Color = Blue,
+        disabledTrackColor: Color = Gray,
+        disabledSliderColor: Color = Green,
+        disabledKnobColor: Color = Color.White,
+        disabledIndicatorColor: Color = Red,
+        disabledMoreThanBaseColor: Color = Red,
+        disabledLessThanBaseColor: Color = Blue,
     ): CustomSliderColors = CustomSliderColors(
         trackColor = trackColor,
         sliderColor = sliderColor,
@@ -28,6 +34,12 @@ object CustomSliderDefaults {
         indicatorColor = indicatorColor,
         moreThanBaseColor = moreThanBaseColor,
         lessThanBaseColor = lessThanBaseColor,
+        disabledTrackColor = disabledTrackColor,
+        disabledSliderColor = disabledSliderColor,
+        disabledKnobColor = disabledKnobColor,
+        disabledIndicatorColor = disabledIndicatorColor,
+        disabledMoreThanBaseColor = disabledMoreThanBaseColor,
+        disabledLessThanBaseColor = disabledLessThanBaseColor,
     )
 
     @Composable

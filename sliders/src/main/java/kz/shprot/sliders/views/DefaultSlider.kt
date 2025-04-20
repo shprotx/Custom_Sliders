@@ -79,13 +79,12 @@ fun DefaultSlider(
                     .fillMaxWidth()
                     .height(properties.indicatorSize),
                 onDraw = {
-                    if (isSliderEnabled) {
-                        drawIndicatorTriangle(
-                            indicatorSize = properties.indicatorSize.toPx(),
-                            currentPosition = sliderPosition.x + horizontalPaddingPx,
-                            color = colors.indicatorColor,
-                        )
-                    }
+                    drawIndicatorTriangle(
+                        indicatorSize = properties.indicatorSize.toPx(),
+                        currentPosition = sliderPosition.x + horizontalPaddingPx,
+                        color = if (isSliderEnabled) colors.indicatorColor
+                                else colors.disabledIndicatorColor,
+                    )
                 },
             )
         }
@@ -123,7 +122,10 @@ fun DefaultSlider(
                 .height(properties.sliderHeight)
                 .clip(RoundedCornerShape(properties.sliderCornerRadius))
                 .clipToBounds()
-                .background(colors.trackColor)
+                .background(
+                    if (isSliderEnabled) colors.trackColor
+                    else colors.disabledTrackColor
+                )
         ) {
 
             scaleItems?.let {
@@ -131,7 +133,7 @@ fun DefaultSlider(
                     modifier = Modifier,
                     scale = scaleItems,
                     containerSize = sliderWidthDp,
-                    color = colors.sliderColor,
+                    color = if (isSliderEnabled) colors.sliderColor else colors.disabledSliderColor,
                 )
             }
 
@@ -141,32 +143,37 @@ fun DefaultSlider(
                     .height(properties.sliderHeight)
                     .clip(RoundedCornerShape(properties.sliderCornerRadius))
                     .clipToBounds()
-                    .pointerInput(sliderWidth) {
+                    .pointerInput(sliderWidth, isSliderEnabled) {
                         detectHorizontalDragGestures(
                             onHorizontalDrag = { change: PointerInputChange, _: Float ->
-                                val newPosition = change.position.copy(
-                                    x = change.position.x
-                                        .coerceAtLeast(0f)
-                                        .coerceAtMost(sliderWidth)
-                                )
-
-                                onValueChange(
-                                    normalizeSliderValue(
-                                        min = minValue,
-                                        max = maxValue,
-                                        pixel = newPosition.x,
-                                        canvasWidth = sliderWidth,
+                                if (isSliderEnabled) {
+                                    val newPosition = change.position.copy(
+                                        x = change.position.x
+                                            .coerceAtLeast(0f)
+                                            .coerceAtMost(sliderWidth)
                                     )
-                                )
+
+                                    onValueChange(
+                                        normalizeSliderValue(
+                                            min = minValue,
+                                            max = maxValue,
+                                            pixel = newPosition.x,
+                                            canvasWidth = sliderWidth,
+                                        )
+                                    )
+                                }
                             },
-                            onDragEnd = onDragEnd,
+                            onDragEnd = {
+                                if (isSliderEnabled) onDragEnd()
+                            },
                         )
                     },
                 onDraw = {
 
                     /* Градиентный ползунок */
                     drawRoundRect(
-                        brush = brush ?: SolidColor(colors.sliderColor),
+                        brush = if (isSliderEnabled) brush ?: SolidColor(colors.sliderColor)
+                                else SolidColor(colors.disabledSliderColor),
                         size = Size(
                             width = techCurrentValue,
                             height = properties.sliderHeight.toPx(),
@@ -186,7 +193,7 @@ fun DefaultSlider(
                             properties.knobWidth.toPx() -
                             properties.knobHorizontalPadding.toPx()
                     drawRoundRect(
-                        color = colors.knobColor,
+                        color = if (isSliderEnabled) colors.knobColor else colors.disabledKnobColor,
                         size = Size(
                             width = properties.knobWidth.toPx(),
                             height = (properties.sliderHeight - properties.knobVerticalPadding * 2).toPx(),
@@ -210,30 +217,34 @@ fun DefaultSlider(
                 SliderScale(
                     modifier = Modifier
                         .width(sliderPosition.x.toDp())
-                        .pointerInput(sliderWidth) {
+                        .pointerInput(sliderWidth, isSliderEnabled) {
                             detectHorizontalDragGestures(
                                 onHorizontalDrag = { change: PointerInputChange, _: Float ->
-                                    val newPosition = change.position.copy(
-                                        x = change.position.x
-                                            .coerceAtLeast(0f)
-                                            .coerceAtMost(sliderWidth)
-                                    )
-
-                                    onValueChange(
-                                        normalizeSliderValue(
-                                            min = minValue,
-                                            max = maxValue,
-                                            pixel = newPosition.x,
-                                            canvasWidth = sliderWidth,
+                                    if (isSliderEnabled) {
+                                        val newPosition = change.position.copy(
+                                            x = change.position.x
+                                                .coerceAtLeast(0f)
+                                                .coerceAtMost(sliderWidth)
                                         )
-                                    )
+
+                                        onValueChange(
+                                            normalizeSliderValue(
+                                                min = minValue,
+                                                max = maxValue,
+                                                pixel = newPosition.x,
+                                                canvasWidth = sliderWidth,
+                                            )
+                                        )
+                                    }
                                 },
-                                onDragEnd = onDragEnd,
+                                onDragEnd = {
+                                    if (isSliderEnabled) onDragEnd()
+                                },
                             )
                         },
                     scale = scaleItems,
                     containerSize = sliderWidthDp,
-                    color = colors.knobColor,
+                    color = if (isSliderEnabled) colors.knobColor else colors.disabledKnobColor,
                 )
             }
         }

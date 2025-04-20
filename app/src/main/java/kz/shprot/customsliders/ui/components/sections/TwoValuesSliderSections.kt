@@ -33,6 +33,7 @@ import kz.shprot.sliders.views.TwoValuesSlider
 @Composable
 internal fun TwoValuesSliderSection(
     horizontalPadding: Dp,
+    isEnabled: Boolean = true,
 ) {
 
     var currentValue by remember { mutableFloatStateOf(60f) }

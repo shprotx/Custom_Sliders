@@ -36,6 +36,7 @@ import kz.shprot.sliders.views.ColorSelectionSlider
 @Composable
 internal fun ColorSelectionSliderSection(
     horizontalPadding: Dp,
+    isEnabled: Boolean = true,
 ) {
 
     val context = LocalContext.current

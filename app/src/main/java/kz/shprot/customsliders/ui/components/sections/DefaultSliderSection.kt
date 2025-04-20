@@ -27,6 +27,7 @@ import kz.shprot.sliders.views.DefaultSlider
 @Composable
 internal fun DefaultSliderSection(
     horizontalPadding: Dp,
+    isEnabled: Boolean = true,
 ) {
 
     val context = LocalContext.current
@@ -54,7 +55,7 @@ internal fun DefaultSliderSection(
             colors = CustomSliderDefaults.sliderColors(),
             properties = CustomSliderDefaults.sliderProperties(),
             withIndicator = true,
-            isSliderEnabled = true,
+            isSliderEnabled = isEnabled,
             customIndicator = {
                 CustomIndicator(defSliderCurrentValue.roundIfWhole())
             },
