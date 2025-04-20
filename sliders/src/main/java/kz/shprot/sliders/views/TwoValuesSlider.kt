@@ -135,25 +135,29 @@ fun TwoValuesSlider(
                 .clip(RoundedCornerShape(properties.sliderCornerRadius))
                 .clipToBounds()
                 .background(colors.trackColor)
-                .pointerInput(sliderWidth) {
+                .pointerInput(sliderWidth, isSliderEnabled) {
                     detectHorizontalDragGestures(
                         onHorizontalDrag = { change: PointerInputChange, _: Float ->
-                            val newPosition = change.position.copy(
-                                x = change.position.x
-                                    .coerceAtLeast(0f)
-                                    .coerceAtMost(sliderWidth)
-                            )
-
-                            onValueChange(
-                                normalizeSliderValue(
-                                    min = minValue,
-                                    max = maxValue,
-                                    pixel = newPosition.x,
-                                    canvasWidth = sliderWidth,
+                            if (isSliderEnabled) {
+                                val newPosition = change.position.copy(
+                                    x = change.position.x
+                                        .coerceAtLeast(0f)
+                                        .coerceAtMost(sliderWidth)
                                 )
-                            )
+
+                                onValueChange(
+                                    normalizeSliderValue(
+                                        min = minValue,
+                                        max = maxValue,
+                                        pixel = newPosition.x,
+                                        canvasWidth = sliderWidth,
+                                    )
+                                )
+                            }
                         },
-                        onDragEnd = onDragEnd,
+                        onDragEnd = {
+                            if (isSliderEnabled) onDragEnd()
+                        },
                     )
                 },
             onDraw = {

@@ -47,6 +47,7 @@ fun ColorSelectionSlider(
     horizontalPaddingDp: Dp = Dimensions.paddingBig,
     colors: CustomSliderColors = CustomSliderDefaults.sliderColors(),
     properties: CustomSliderProperties = CustomSliderDefaults.sliderProperties(),
+    isSliderEnabled: Boolean = true,
     customIndicator: @Composable (() -> Unit)? = null,
     onSliderPositionChanged: (Color) -> Unit,
     onDragEnd: () -> Unit,
@@ -102,20 +103,24 @@ fun ColorSelectionSlider(
                 .clip(RoundedCornerShape(properties.sliderCornerRadius))
                 .clipToBounds()
                 .background(gradientBrush)
-                .pointerInput(sliderWidth) {
+                .pointerInput(sliderWidth, isSliderEnabled) {
                     detectHorizontalDragGestures(
                         onHorizontalDrag = { change: PointerInputChange, _: Float ->
-                            val newPosition = change.position.copy(
-                                x = change.position.x
-                                    .coerceAtLeast(0f)
-                                    .coerceAtMost(sliderWidth)
-                            )
-                            colorPosition = newPosition
-                            val normalizedPosition = newPosition.x / sliderWidth
-                            val color = getColorBySliderPosition(gradientList, normalizedPosition)
-                            onSliderPositionChanged(color)
+                            if (isSliderEnabled) {
+                                val newPosition = change.position.copy(
+                                    x = change.position.x
+                                        .coerceAtLeast(0f)
+                                        .coerceAtMost(sliderWidth)
+                                )
+                                colorPosition = newPosition
+                                val normalizedPosition = newPosition.x / sliderWidth
+                                val color = getColorBySliderPosition(gradientList, normalizedPosition)
+                                onSliderPositionChanged(color)
+                            }
                         },
-                        onDragEnd = onDragEnd,
+                        onDragEnd = {
+                            if (isSliderEnabled) onDragEnd()
+                        },
                     )
                 },
             onDraw = {

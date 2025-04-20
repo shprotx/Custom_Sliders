@@ -77,7 +77,7 @@ internal fun TwoValuesSliderSection(
             colors = CustomSliderDefaults.sliderColors(),
             properties = CustomSliderDefaults.sliderProperties(),
             withIndicator = true,
-            isSliderEnabled = true,
+            isSliderEnabled = isEnabled,
             customIndicator = null,
             onValueChange = { newValue -> currentValue = newValue },
             onDragEnd = {

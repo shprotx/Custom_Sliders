@@ -64,6 +64,7 @@ internal fun ColorSelectionSliderSection(
             gradientList = rgbGradient,
             horizontalPaddingDp = horizontalPadding,
             properties = CustomSliderDefaults.sliderProperties(),
+            isSliderEnabled = isEnabled,
             customIndicator = {
                 CustomIndicator(
                     value = currentColor?.toHex()
