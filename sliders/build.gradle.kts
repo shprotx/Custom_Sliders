@@ -45,7 +45,7 @@ afterEvaluate {
 
                 groupId = "com.github.shprotx"
                 artifactId = "sliders"
-                version = "1.1"
+                version = "1.2"
             }
         }
     }

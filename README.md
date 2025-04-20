@@ -36,7 +36,7 @@ Add library dependency
 
 ```kotlin
 dependencies {
-    implementation("com.github.shprotx:Custom_Sliders:v1.1")
+    implementation("com.github.shprotx:Custom_Sliders:v1.2")
 }
 ```
 
